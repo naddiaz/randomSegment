@@ -1,0 +1,21 @@
+body{
+    margin: 0 auto;
+    background-color: #111;
+}
+
+.lower-custom .digit .segment{
+    background:#ff0;
+}
+
+.lower-custom .digit .segment.off {
+    box-shadow: 0 0 25px rgba(255, 255, 0, 0.5);
+}
+
+.lower-custom .digit .segment.on {
+    box-shadow:0 0 25px rgba(255,255,0,0.5);
+}
+
+.higher-custom .zoom > .segment{
+    box-shadow:0 0 25px rgba(19,103,234,0.5) !important;
+    background: rgb(13,71,161) !important;
+}
