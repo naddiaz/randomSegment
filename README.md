@@ -16,7 +16,7 @@ After that, you should put in a HMTL file the following code:
         <div class="segment-panel" data-max-random="1234"></div>
         
         <!-- Import segment script -->
-        <script type="javascript" src="./js/segments.js"></script>
+        <script src="./js/segments.js"></script>
         [...]
     </body>
  ```
