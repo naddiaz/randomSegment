@@ -8,14 +8,14 @@ body{
 }
 
 .lower-custom .digit .segment.off {
-    box-shadow: 0 0 25px rgba(255, 255, 0, 0.5);
+    box-shadow: 0 0 25px rgba(255, 255, 0, 0.3);
 }
 
 .lower-custom .digit .segment.on {
-    box-shadow:0 0 25px rgba(255,255,0,0.5);
+    box-shadow:0 0 25px rgba(255,255,0,0.3);
 }
 
 .higher-custom .zoom > .segment{
-    box-shadow:0 0 25px rgba(19,103,234,0.5) !important;
+    box-shadow:0 0 25px rgba(19,103,234,0.3) !important;
     background: rgb(13,71,161) !important;
 }

@@ -17,45 +17,63 @@ var digitSegments = [
 function startRandSegment() {
 
     var _panel = document.querySelector(".segment-panel");
-    var maxRandom = _panel.getAttribute("data-max-random").split("");
-    var digits = maxRandom.length;
+    var maxRandom = parseInt(_panel.getAttribute("data-max-random"));
+    var random = getRandomInt(0, maxRandom).toString().split("");
+    while(random.length < maxRandom.toString().length){
+        random.unshift("0");
+    }
+    var digits = random.length;
 
+    // Create elements
     var arrDigits = [];
-    for(var i=0; i<digits; i++){
+    for (var i = 0; i < digits; i++) {
         var node = document.createElement("DIV");
-        node.setAttribute("id","_d"+i);
-        node.setAttribute("class","digit");
-        for(var s=0; s<7; s++){
+        node.setAttribute("id", "_d" + i);
+        node.setAttribute("class", "digit");
+        for (var s = 0; s < 7; s++) {
             var seg = document.createElement("DIV");
-            seg.setAttribute("class","segment");
+            seg.setAttribute("class", "segment");
             node.appendChild(seg);
         }
         _panel.appendChild(node);
         arrDigits.push(node);
     }
 
+    // Loop for initialize change of number in lower
+    var intervals = [];
+    var promises = [];
     for(var i=0; i<digits; i++){
-        set(arrDigits[i], parseInt(maxRandom[i]),100, (1000-(i*100+250)), function (digit) {
-            setTimeout(function(){
-                off(digit);
-                digit.classList.add('zoom');
-            },250);
+        intervals.push(loop(arrDigits[i], 9, 500));
 
-        });
+        promises.push(
+            function (resolve) {
+                setTimeout(function () {
+                    resolve();
+                }, 1000);
+            }
+        );
     }
+    executePromise(promises, arrDigits, intervals, digits-1, random);
 };
 
-function set(digit, max, speed, during, callback) {
-    setTimeout(function() {
+function executePromise(promises, arrDigits, intervals, d, numbers){
+    promises[d](
+        function () {
+            setNumber(arrDigits[d],numbers[d]);
+            off(arrDigits[d]);
+            arrDigits[d].classList.add('zoom');
+            clearInterval(intervals[d]);
+            d -= 1;
+            if(d >= 0)
+                executePromise(promises, arrDigits, intervals, d, numbers);
+        }
+    )
+}
+
+function loop(digit, max, speed) {
+    return setInterval(function() {
         var random = getRandomInt(0, max);
         setNumber(digit, random, 1);
-        speed = speed+50;
-        if(speed < during){
-            set(digit, max, speed, during, callback);
-        }
-        else{
-            callback(digit);
-        }
     },speed);
 }
 
